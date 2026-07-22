@@ -1,4 +1,10 @@
-public class ImproperValidationOfArrayIndex extends HttpServlet {
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ImproperValidationOfArrayConstruction extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
   throws ServletException, IOException {
@@ -11,7 +17,7 @@ public class ImproperValidationOfArrayIndex extends HttpServlet {
          * BAD numberOfItems may be zero, which would cause the array indexing operation to
          * throw an ArrayIndexOutOfBoundsException
          */
-        String items = new String[numberOfItems];
+        String[] items = new String[numberOfItems];
         items[0] = "Item 1";
       }
 
@@ -19,7 +25,7 @@ public class ImproperValidationOfArrayIndex extends HttpServlet {
         /*
          * GOOD numberOfItems must be greater than zero, so the indexing succeeds.
          */
-        String items = new String[numberOfItems];
+        String[] items = new String[numberOfItems];
         items[0] = "Item 1";
       }
 

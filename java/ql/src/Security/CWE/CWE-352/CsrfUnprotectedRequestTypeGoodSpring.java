@@ -1,6 +1,18 @@
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
+public class CsrfUnprotectedRequestTypeGoodSpring {
+
+boolean transfer(HttpServletRequest request, HttpServletResponse response) {
+  return true;
+}
+
+boolean delete(HttpServletRequest request, HttpServletResponse response) {
+  return true;
+}
 
 // GOOD - use an unsafe HTTP request like POST
 @RequestMapping(value="/transfer", method=RequestMethod.POST)
@@ -12,4 +24,5 @@ public boolean doTransfer(HttpServletRequest request, HttpServletResponse respon
 @DeleteMapping(value="/delete")
 public boolean doDelete(HttpServletRequest request, HttpServletResponse response){
   return delete(request, response);
+}
 }

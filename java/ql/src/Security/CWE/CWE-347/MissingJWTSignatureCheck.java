@@ -1,3 +1,11 @@
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.JwtHandlerAdapter;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+
+public class MissingJWTSignatureCheck {
+
 public void badJwt(String token) {
     Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
@@ -7,7 +15,7 @@ public void badJwt(String token) {
 public void badJwtHandler(String token) {
     Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
-                .parse(plaintextJwt, new JwtHandlerAdapter<Jwt<Header, String>>() {
+                .parse(token, new JwtHandlerAdapter<Jwt<Header, String>>() {
                     @Override
                     public Jwt<Header, String> onPlaintextJwt(Jwt<Header, String> jwt) {
                         return jwt;
@@ -25,10 +33,11 @@ public void goodJwt(String token) {
 public void goodJwtHandler(String token) {
     Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
-                .parse(plaintextJwt, new JwtHandlerAdapter<Jws<String>>() {
+                .parse(token, new JwtHandlerAdapter<Jws<String>>() {
                     @Override
                     public Jws<String> onPlaintextJws(Jws<String> jws) {
                         return jws;
                     }
                 }); // GOOD: The handler is called on a verified JWS
+}
 }

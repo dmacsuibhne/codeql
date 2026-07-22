@@ -1,5 +1,5 @@
-class Test {
-	public static void main(String[] args) {
+public class ArithmeticUncontrolled {
+        public static void main(String[] args) {
 		{
 			int data = (new java.security.SecureRandom()).nextInt();
 

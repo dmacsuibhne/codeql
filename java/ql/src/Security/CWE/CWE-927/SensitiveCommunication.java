@@ -1,4 +1,8 @@
-public void sendBroadcast1(Context context, String token, String refreshToken) 
+import android.content.Context;
+import android.content.Intent;
+
+public class SensitiveCommunication {
+public void sendBroadcast1(Context context, String token, String refreshToken)
 {
     {
         // BAD: broadcast sensitive information to all listeners
@@ -27,4 +31,5 @@ public void sendBroadcast1(Context context, String token, String refreshToken)
         intent.putExtra("refreshToken", refreshToken);
         context.sendBroadcast(intent);
     }
+}
 }

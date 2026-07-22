@@ -1,5 +1,9 @@
-class Test {
-	public static void main(String[] args) throws IOException {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class NumericCastTainted {
+        public static void main(String[] args) throws IOException {
 		{
 			long data;
 

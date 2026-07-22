@@ -1,5 +1,8 @@
+import javax.servlet.http.HttpServletRequest;
 import ognl.Ognl;
 import ognl.OgnlException;
+
+public class OgnlInjection {
 
 public void evaluate(HttpServletRequest request, Object root) throws OgnlException {
   String expression = request.getParameter("expression");
@@ -16,7 +19,9 @@ public void evaluate(HttpServletRequest request, Object root) throws OgnlExcepti
   }
 }
 
-public void isValid(Strig expression) {
+public boolean isValid(String expression) {
   // Custom method to validate the expression.
   // For instance, make sure it doesn't include unexpected code.
+  return true;
+}
 }

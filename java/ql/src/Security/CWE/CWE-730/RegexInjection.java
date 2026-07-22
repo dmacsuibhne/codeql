@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-public class RegexInjectionDemo extends HttpServlet {
+public class RegexInjection extends HttpServlet {
 
   public boolean badExample(javax.servlet.http.HttpServletRequest request) {
     String regex = request.getParameter("regex");

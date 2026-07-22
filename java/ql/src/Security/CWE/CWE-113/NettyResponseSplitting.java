@@ -1,6 +1,12 @@
 import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.DefaultHttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpVersion;
 
-public class ResponseSplitting {
+public class NettyResponseSplitting {
+    private HttpVersion version;
+    private HttpResponseStatus httpResponseStatus;
+
     // BAD: Disables the internal response splitting verification
     private final DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(false);
 

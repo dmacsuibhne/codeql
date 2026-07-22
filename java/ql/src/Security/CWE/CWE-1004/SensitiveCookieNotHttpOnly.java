@@ -1,3 +1,8 @@
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.NewCookie;
+
 class SensitiveCookieNotHttpOnly {
     // GOOD - Create a sensitive cookie with the `HttpOnly` flag set.
     public void addCookie(String jwt_token, HttpServletRequest request, HttpServletResponse response) {

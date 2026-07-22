@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+
 public class PartialPathTraversalBad {
     public void example(File dir, File parent) throws IOException {
         // BAD: dir.getCanonicalPath() not slash-terminated

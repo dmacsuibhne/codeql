@@ -1,5 +1,17 @@
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+public class CsrfUnprotectedRequestTypeBadSpring {
+
+boolean transfer(HttpServletRequest request, HttpServletResponse response) {
+  return true;
+}
+
+boolean delete(HttpServletRequest request, HttpServletResponse response) {
+  return true;
+}
 
 // BAD - a safe HTTP request like GET should not be used for a state-changing action
 @RequestMapping(value="/transfer", method=RequestMethod.GET)
@@ -11,4 +23,5 @@ public boolean doTransfer(HttpServletRequest request, HttpServletResponse respon
 @RequestMapping(value="/delete")
 public boolean doDelete(HttpServletRequest request, HttpServletResponse response){
   return delete(request, response);
+}
 }

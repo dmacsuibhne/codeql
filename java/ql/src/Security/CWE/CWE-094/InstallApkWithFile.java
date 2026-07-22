@@ -5,6 +5,8 @@ import android.os.Environment;
 
 import java.io.File;
 
+public class InstallApkWithFile extends Activity {
+    void install() {
 /* Get a file from external storage */
 File file = new File(Environment.getExternalStorageDirectory(), "myapp.apk");
 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -13,3 +15,5 @@ Intent intent = new Intent(Intent.ACTION_VIEW);
 intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
 
 startActivity(intent);
+    }
+}

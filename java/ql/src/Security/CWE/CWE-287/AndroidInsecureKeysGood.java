@@ -1,4 +1,11 @@
-private void generateSecretKey() {
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
+import java.security.GeneralSecurityException;
+import javax.crypto.KeyGenerator;
+
+public class AndroidInsecureKeysGood {
+
+private void generateSecretKey() throws GeneralSecurityException {
     KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec.Builder(
         "MySecretKey",
         KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
@@ -13,4 +20,5 @@ private void generateSecretKey() {
             KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
     keyGenerator.init(keyGenParameterSpec);
     keyGenerator.generateKey();
+}
 }

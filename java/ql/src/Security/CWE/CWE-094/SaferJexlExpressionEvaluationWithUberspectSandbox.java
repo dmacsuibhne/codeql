@@ -1,3 +1,25 @@
+import java.security.AccessControlException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import org.apache.commons.jexl3.JexlArithmetic;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlContext;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.JexlOperator;
+import org.apache.commons.jexl3.MapContext;
+import org.apache.commons.jexl3.introspection.JexlMethod;
+import org.apache.commons.jexl3.introspection.JexlPropertyGet;
+import org.apache.commons.jexl3.introspection.JexlPropertySet;
+import org.apache.commons.jexl3.introspection.JexlUberspect;
+import org.apache.commons.jexl3.introspection.JexlUberspect.PropertyResolver;
+
+public class SaferJexlExpressionEvaluationWithUberspectSandbox {
 public void evaluate(Socket socket) throws IOException {
   try (BufferedReader reader = new BufferedReader(
         new InputStreamReader(socket.getInputStream()))) {
@@ -10,6 +32,7 @@ public void evaluate(Socket socket) throws IOException {
     JexlContext context = new MapContext();
     expression.evaluate(context);
   }
+}
 
   private static class JexlUberspectSandbox implements JexlUberspect {
 

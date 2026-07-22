@@ -1,7 +1,11 @@
+import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
+import javax.naming.directory.SearchControls;
+import javax.servlet.http.HttpServletRequest;
 import org.owasp.esapi.Encoder;
 import org.owasp.esapi.reference.DefaultEncoder;
 
+public class LdapInjectionJndi {
 public void ldapQueryBad(HttpServletRequest request, DirContext ctx) throws NamingException {
   String organizationName = request.getParameter("organization_name");
   String username = request.getParameter("username");
@@ -10,7 +14,7 @@ public void ldapQueryBad(HttpServletRequest request, DirContext ctx) throws Nami
   String dn = "OU=People,O=" + organizationName;
 
   // BAD: User input used in search filter without encoding
-  String filter = "username=" + userName;
+  String filter = "username=" + username;
 
   ctx.search(dn, filter, new SearchControls());
 }
@@ -31,4 +35,5 @@ public void ldapQueryGood(HttpServletRequest request, DirContext ctx) throws Nam
   String safeFilter = "username=" + safeUsername;
   
   ctx.search(safeDn, safeFilter, new SearchControls());
+}
 }

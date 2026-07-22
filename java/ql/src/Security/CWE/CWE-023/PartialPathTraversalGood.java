@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 
 public class PartialPathTraversalGood {
     public void example(File dir, File parent) throws IOException {

@@ -1,7 +1,9 @@
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class TempDirUsageVulnerable {
-    void exampleVulnerable() {
+    void exampleVulnerable() throws IOException {
         File temp1 = File.createTempFile("random", ".txt"); // BAD: File has permissions `-rw-r--r--`
 
         File temp2 = File.createTempFile("random", "file", null); // BAD: File has permissions `-rw-r--r--`

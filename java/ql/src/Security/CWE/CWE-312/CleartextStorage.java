@@ -1,4 +1,16 @@
-public static void main(String[] args) {
+import java.net.PasswordAuthentication;
+import java.security.MessageDigest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+public class CleartextStorage {
+        static HttpServletResponse response;
+
+        private static String bytesToString(byte[] bytes) {
+                return new String(bytes);
+        }
+
+public static void main(String[] args) throws Exception {
 	{
 		String data;
 		PasswordAuthentication credentials =
@@ -23,6 +35,7 @@ public static void main(String[] args) {
 		data = bytesToString(hashedCredsAsBytes);
 		
 		// GOOD: store data in a cookie in encrypted form
-		response.addCookie(new Cookie("auth", data));
-	}
+                response.addCookie(new Cookie("auth", data));
+        }
+}
 }

@@ -1,3 +1,8 @@
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Base64;
+import org.apache.http.client.methods.HttpPost;
+
 public class InsecureBasicAuth {
   /**
    * Test basic authentication with Apache HTTP request.
@@ -24,7 +29,7 @@ public class InsecureBasicAuth {
   /**
    * Test basic authentication with Java HTTP URL connection.
    */
-  public void testHttpUrlConnection(String username, String password) {
+  public void testHttpUrlConnection(String username, String password) throws Exception {
 
     // BAD: basic authentication over HTTP
     String urlStr = "http://www.example.com/rest/getuser.do?uid=abcdx";

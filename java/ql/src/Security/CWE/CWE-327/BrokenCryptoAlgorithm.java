@@ -1,5 +1,10 @@
-// BAD: DES is a weak algorithm 
-Cipher des = Cipher.getInstance("DES");
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+public class BrokenCryptoAlgorithm {
+    void run(SecretKeySpec secretKeySpec, String input) throws Exception {
+// BAD: DES is a weak algorithm
+Cipher cipher = Cipher.getInstance("DES");
 cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
 
 byte[] encrypted = cipher.doFinal(input.getBytes("UTF-8"));
@@ -10,3 +15,5 @@ byte[] encrypted = cipher.doFinal(input.getBytes("UTF-8"));
 Cipher aes = Cipher.getInstance("AES");
 
 // ...
+    }
+}

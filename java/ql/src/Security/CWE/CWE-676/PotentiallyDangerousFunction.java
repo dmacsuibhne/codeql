@@ -1,4 +1,10 @@
-private volatile Thread blinker;
+public class PotentiallyDangerousFunction implements Runnable {
+    private int interval;
+
+    private void repaint() {
+    }
+
+    private volatile Thread blinker;
 
 public void stop() {
     blinker = null;
@@ -13,4 +19,5 @@ public void run() {
         }
         repaint();
     }
+}
 }

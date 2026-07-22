@@ -1,4 +1,15 @@
+import org.kohsuke.stapler.HttpRedirect;
 import org.kohsuke.stapler.verb.POST;
+
+public class CsrfUnprotectedRequestTypeGoodStapler {
+
+HttpRedirect transfer() {
+  return null;
+}
+
+HttpRedirect post() {
+  return null;
+}
 
 // GOOD - use POST
 @POST
@@ -10,4 +21,5 @@ public HttpRedirect doTransfer() {
 @POST
 public HttpRedirect doPost() {
   return post();
+}
 }

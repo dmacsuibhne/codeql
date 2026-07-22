@@ -1,5 +1,7 @@
-class Test {
-    public static void main(String[] args) {
+import java.io.IOException;
+
+public class ExecUnescaped {
+    public static void main(String[] args) throws IOException {
         // BAD: user input might include special characters such as ampersands
         {
             String latlonCoords = args[1];
@@ -12,7 +14,7 @@ class Test {
             String latlonCoords = args[1];
             Runtime rt = Runtime.getRuntime();
             Process exec = rt.exec(new String[] {
-                    "c:\\path\to\latlon2utm.exe",
+                    "c:\\path\\to\\latlon2utm.exe",
                     latlonCoords });
         }
     }

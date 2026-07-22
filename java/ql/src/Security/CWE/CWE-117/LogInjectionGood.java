@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LogInjection {
+public class LogInjectionGood {
 
-    private final Logger log = LoggerFactory.getLogger(LogInjection.class);
+    private final Logger log = LoggerFactory.getLogger(LogInjectionGood.class);
 
     // /good?username=Guest'%0AUser:'Admin
     @GetMapping("/good")
@@ -21,5 +21,6 @@ public class LogInjection {
 
             return username;
         }
+        return "";
     }
 }

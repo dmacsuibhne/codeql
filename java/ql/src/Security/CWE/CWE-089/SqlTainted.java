@@ -1,3 +1,13 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SqlTainted {
+    private Connection connection;
+
+    void run() throws SQLException {
 {
     // BAD: the category might have SQL special characters in it
     String category = System.getenv("ITEM_CATEGORY");
@@ -14,4 +24,6 @@
     PreparedStatement statement = connection.prepareStatement(query2);
     statement.setString(1, category);
     ResultSet results = statement.executeQuery();
+}
+    }
 }

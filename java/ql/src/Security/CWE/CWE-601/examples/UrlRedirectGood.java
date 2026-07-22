@@ -1,4 +1,12 @@
-public class UrlRedirect extends HttpServlet {
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class UrlRedirectGood extends HttpServlet {
   private static final List<String> VALID_REDIRECTS = Arrays.asList(
     "http://cwe.mitre.org/data/definitions/601.html",
     "http://cwe.mitre.org/data/definitions/79.html"

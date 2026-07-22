@@ -1,4 +1,6 @@
-public class PossibleArrayIndexOutOfBounds {
+import java.util.Random;
+
+public class ImproperValidationOfArrayConstructionCodeSpecified {
 
   public static void main(String[] args) {
       int numberOfItems = new Random().nextInt(10);
@@ -8,7 +10,7 @@ public class PossibleArrayIndexOutOfBounds {
          * BAD numberOfItems may be zero, which would cause the array indexing operation to
          * throw an ArrayIndexOutOfBoundsException
          */
-        String items = new String[numberOfItems];
+        String[] items = new String[numberOfItems];
         items[0] = "Item 1";
       }
 
@@ -16,7 +18,7 @@ public class PossibleArrayIndexOutOfBounds {
         /*
          * GOOD numberOfItems must be greater than zero, so the indexing succeeds.
          */
-        String items = new String[numberOfItems];
+        String[] items = new String[numberOfItems];
         items[0] = "Item 1";
       }
   }

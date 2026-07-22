@@ -1,8 +1,15 @@
-@Controller
-public class VelocitySSTI {
+import java.io.StringWriter;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-	@GetMapping(value = "good")
-	public void good(HttpServletRequest request) {
+@Controller
+public class SSTIGood {
+
+        @GetMapping(value = "good")
+        public void good(HttpServletRequest request) {
 		Velocity.init();
 		VelocityContext context = new VelocityContext();
 

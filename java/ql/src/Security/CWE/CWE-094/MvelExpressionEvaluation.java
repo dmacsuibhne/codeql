@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import org.mvel2.MVEL;
+
+public class MvelExpressionEvaluation {
 public void evaluate(Socket socket) throws IOException {
   try (BufferedReader reader = new BufferedReader(
     new InputStreamReader(socket.getInputStream()))) {
@@ -22,4 +29,5 @@ public void safeEvaluate(Socket socket) throws IOException {
 private void validateExpression(String expression) {
   // Validate that the expression does not contain unexpected code.
   // For instance, this can be done with allow-lists or deny-lists of code patterns.
+}
 }

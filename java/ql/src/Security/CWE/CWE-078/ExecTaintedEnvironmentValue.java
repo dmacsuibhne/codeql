@@ -1,4 +1,12 @@
-public void doGet(HttpServletRequest request, HttpServletResponse response) {
+import java.io.IOException;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ExecTaintedEnvironmentValue {
+private ProcessBuilder processBuilder = new ProcessBuilder();
+
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String path = request.getParameter("path");
 
     Map<String, String> env = processBuilder.environment();
@@ -6,4 +14,5 @@ public void doGet(HttpServletRequest request, HttpServletResponse response) {
     env.put("PATH", path);
 
     processBuilder.start();
+}
 }

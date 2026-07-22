@@ -1,11 +1,18 @@
+import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class SSRF extends HttpServlet {
-	private static final String VALID_URI = "http://lgtm.com";
-	private HttpClient client = HttpClient.newHttpClient();
+public class RequestForgery extends HttpServlet {
+        private static final String VALID_URI = "http://lgtm.com";
+        private HttpClient client = HttpClient.newHttpClient();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException, Exception {
 		URI uri = new URI(request.getParameter("uri"));
 		// BAD: a request parameter is incorporated without validation into a Http request
 		HttpRequest r = HttpRequest.newBuilder(uri).build();

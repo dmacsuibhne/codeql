@@ -3,6 +3,9 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
+class AnotherActivity extends Activity {
+}
+
 public class ImplicitPendingIntents extends Activity {
 
 	public void onCreate(Bundle savedInstance) {

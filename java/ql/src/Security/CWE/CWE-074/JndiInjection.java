@@ -1,5 +1,14 @@
+import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+
+public class JndiInjection {
+
+boolean isValid(String name) {
+  return true;
+}
 
 public void jndiLookup(HttpServletRequest request) throws NamingException {
   String name = request.getParameter("name");
@@ -18,4 +27,5 @@ public void jndiLookup(HttpServletRequest request) throws NamingException {
   } else {
     // Reject the request
   }
+}
 }
