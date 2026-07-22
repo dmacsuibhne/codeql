@@ -1,7 +1,0 @@
-name: codeql/typeinference
-version: 0.0.34
-groups: shared
-library: true
-dependencies:
-  codeql/util: ${workspace}
-warnOnImplicitThis: true
