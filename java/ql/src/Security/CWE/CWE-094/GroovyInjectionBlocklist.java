@@ -1,4 +1,5 @@
 import javax.servlet.http.HttpServletRequest;
+
 import groovy.lang.GroovyClassLoader;
 
 public class GroovyInjectionBlocklist {

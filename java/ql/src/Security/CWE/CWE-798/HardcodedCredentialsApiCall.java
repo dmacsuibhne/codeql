@@ -3,16 +3,16 @@ import java.sql.SQLException;
 
 public class HardcodedCredentialsApiCall {
 
-private static final String p = "123456"; // BAD: hard-coded credential
+    private static final String p = "123456"; // BAD: hard-coded credential
 
-public static void main(String[] args) throws SQLException {
-    String url = "jdbc:mysql://localhost/test";
-    String u = "admin"; // BAD: hard-coded credential
+    public static void main(String[] args) throws SQLException {
+        String url = "jdbc:mysql://localhost/test";
+        String u = "admin"; // BAD: hard-coded credential
 
-    getConn(url, u, p);
-}
+        getConn(url, u, p);
+    }
 
-public static void getConn(String url, String v, String q) throws SQLException {
-    DriverManager.getConnection(url, v, q); // sensitive call
-}
+    public static void getConn(String url, String v, String q) throws SQLException {
+        DriverManager.getConnection(url, v, q); // sensitive call
+    }
 }

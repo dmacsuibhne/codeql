@@ -8,7 +8,7 @@ public class ExecRelative {
     public static void main(String[] args) throws IOException {
         // BAD: relative path
         Runtime.getRuntime().exec("make");
-        
+
         // GOOD: absolute path
         Runtime.getRuntime().exec("/usr/bin/make");
 

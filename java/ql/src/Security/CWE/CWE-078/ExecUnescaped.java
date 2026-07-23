@@ -13,9 +13,9 @@ public class ExecUnescaped {
         {
             String latlonCoords = args[1];
             Runtime rt = Runtime.getRuntime();
-            Process exec = rt.exec(new String[] {
+            Process exec = rt.exec(new String[]{
                     "c:\\path\\to\\latlon2utm.exe",
-                    latlonCoords });
+                    latlonCoords});
         }
     }
 }

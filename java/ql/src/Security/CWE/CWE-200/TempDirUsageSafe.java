@@ -20,8 +20,8 @@ public class TempDirUsageSafe {
         // Warning: This will fail on windows as it doesn't support PosixFilePermissions.
         // See `exampleSafeWithWindowsSupportFile` if your code needs to support windows and unix-like systems.
         Files.createFile(
-            tempChildFile.toPath(),
-            PosixFilePermissions.asFileAttribute(EnumSet.of(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE))
+                tempChildFile.toPath(),
+                PosixFilePermissions.asFileAttribute(EnumSet.of(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE))
         ); // GOOD: Good has permissions `-rw-------`
     }
 
@@ -42,13 +42,13 @@ public class TempDirUsageSafe {
                 // This is not necessary on Windows, each user has their own temp directory
                 final EnumSet<PosixFilePermission> posixFilePermissions =
                         EnumSet.of(
-                            PosixFilePermission.OWNER_READ,
-                            PosixFilePermission.OWNER_WRITE
+                                PosixFilePermission.OWNER_READ,
+                                PosixFilePermission.OWNER_WRITE
                         );
                 if (!Files.exists(tempDirChild)) {
                     Files.createFile(
-                        tempDirChild,
-                        PosixFilePermissions.asFileAttribute(posixFilePermissions)
+                            tempDirChild,
+                            PosixFilePermissions.asFileAttribute(posixFilePermissions)
                     ); // GOOD: Directory has permissions `-rw-------`
                 } else {
                     Files.setPosixFilePermissions(
@@ -78,14 +78,14 @@ public class TempDirUsageSafe {
                 // This is not necessary on Windows, each user has their own temp directory
                 final EnumSet<PosixFilePermission> posixFilePermissions =
                         EnumSet.of(
-                            PosixFilePermission.OWNER_READ,
-                            PosixFilePermission.OWNER_WRITE,
-                            PosixFilePermission.OWNER_EXECUTE
+                                PosixFilePermission.OWNER_READ,
+                                PosixFilePermission.OWNER_WRITE,
+                                PosixFilePermission.OWNER_EXECUTE
                         );
                 if (!Files.exists(tempDirChild)) {
                     Files.createDirectories(
-                        tempDirChild,
-                        PosixFilePermissions.asFileAttribute(posixFilePermissions)
+                            tempDirChild,
+                            PosixFilePermissions.asFileAttribute(posixFilePermissions)
                     ); // GOOD: Directory has permissions `drwx------`
                 } else {
                     Files.setPosixFilePermissions(
