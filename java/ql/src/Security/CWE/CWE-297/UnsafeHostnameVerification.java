@@ -8,6 +8,7 @@ import javax.net.ssl.SSLSession;
 public class UnsafeHostnameVerification {
 
     static void check(String[] hosts, X509Certificate cert) throws SSLException {
+        throw new RuntimeException("Not implemented");
     }
 
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class UnsafeHostnameVerification {
                                 try { // GOOD: verify the certificate
                                         Certificate[] certs = session.getPeerCertificates();
                                         X509Certificate x509 = (X509Certificate) certs[0];
-                                        check(new String[]{hostname}, x509);
+                                        check(new String[]{hostname}, x509); //todo not a genuine GOOD unless check() is implemented for real
                                         return true;
                                 } catch (SSLException e) {
                                         return false;
