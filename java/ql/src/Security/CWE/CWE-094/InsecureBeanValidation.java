@@ -1,6 +1,8 @@
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
 import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,16 +15,16 @@ public class InsecureBeanValidation implements ConstraintValidator<Object, Strin
         public static final char EL_DESIGNATOR = '$';
         public static final char ESCAPE_CHARACTER = '\\';
 
-        private static final Pattern ESCAPE_MESSAGE_PARAMETER_PATTERN = Pattern.compile( "([\\" + ESCAPE_CHARACTER + BEGIN_TERM + END_TERM + EL_DESIGNATOR + "])" );
+        private static final Pattern ESCAPE_MESSAGE_PARAMETER_PATTERN = Pattern.compile("([\\" + ESCAPE_CHARACTER + BEGIN_TERM + END_TERM + EL_DESIGNATOR + "])");
 
         private InterpolationHelper() {
         }
 
         public static String escapeMessageParameter(String messageParameter) {
-            if ( messageParameter == null ) {
+            if (messageParameter == null) {
                 return null;
             }
-            return ESCAPE_MESSAGE_PARAMETER_PATTERN.matcher( messageParameter ).replaceAll( Matcher.quoteReplacement( String.valueOf( ESCAPE_CHARACTER ) ) + "$1" );
+            return ESCAPE_MESSAGE_PARAMETER_PATTERN.matcher(messageParameter).replaceAll(Matcher.quoteReplacement(String.valueOf(ESCAPE_CHARACTER)) + "$1");
         }
 
     }
@@ -39,9 +41,9 @@ public class InsecureBeanValidation implements ConstraintValidator<Object, Strin
         constraintContext.buildConstraintViolationWithTemplate(escaped).addConstraintViolation().disableDefaultConstraintViolation();
 
         // Good: Bean properties (normally user-controlled) are parameterized
-        HibernateConstraintValidatorContext context = constraintContext.unwrap( HibernateConstraintValidatorContext.class );
-        context.addMessageParameter( "prop", object );
-        context.buildConstraintViolationWithTemplate( "{prop} is invalid").addConstraintViolation();
+        HibernateConstraintValidatorContext context = constraintContext.unwrap(HibernateConstraintValidatorContext.class);
+        context.addMessageParameter("prop", object);
+        context.buildConstraintViolationWithTemplate("{prop} is invalid").addConstraintViolation();
         return false;
     }
 

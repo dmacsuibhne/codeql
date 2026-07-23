@@ -6,14 +6,14 @@ import io.jsonwebtoken.Jwts;
 
 public class MissingJWTSignatureCheck {
 
-public void badJwt(String token) {
-    Jwts.parserBuilder()
+    public void badJwt(String token) {
+        Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
                 .parse(token); // BAD: Does not verify the signature
-}
+    }
 
-public void badJwtHandler(String token) {
-    Jwts.parserBuilder()
+    public void badJwtHandler(String token) {
+        Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
                 .parse(token, new JwtHandlerAdapter<Jwt<Header, String>>() {
                     @Override
@@ -21,17 +21,17 @@ public void badJwtHandler(String token) {
                         return jwt;
                     }
                 }); // BAD: The handler is called on an unverified JWT
-}
+    }
 
-public void goodJwt(String token) {
-    Jwts.parserBuilder()
+    public void goodJwt(String token) {
+        Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
                 .parseClaimsJws(token) // GOOD: Verify the signature
                 .getBody();
-}
+    }
 
-public void goodJwtHandler(String token) {
-    Jwts.parserBuilder()
+    public void goodJwtHandler(String token) {
+        Jwts.parserBuilder()
                 .setSigningKey("someBase64EncodedKey").build()
                 .parse(token, new JwtHandlerAdapter<Jws<String>>() {
                     @Override
@@ -39,5 +39,5 @@ public void goodJwtHandler(String token) {
                         return jws;
                     }
                 }); // GOOD: The handler is called on a verified JWS
-}
+    }
 }
