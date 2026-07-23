@@ -1,3 +1,18 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
+public class InsecureTrustManager {
 public static void main(String[] args) throws Exception {
     {
         class InsecureTrustManager implements X509TrustManager {
@@ -49,4 +64,5 @@ public static void main(String[] args) throws Exception {
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setSSLSocketFactory(context.getSocketFactory());
     }
+}
 }

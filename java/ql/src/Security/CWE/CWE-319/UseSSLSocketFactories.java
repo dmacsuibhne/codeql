@@ -1,3 +1,17 @@
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import javax.rmi.ssl.SslRMIClientSocketFactory;
+import javax.rmi.ssl.SslRMIServerSocketFactory;
+
+public class UseSSLSocketFactories {
+
+    interface Test extends Remote {
+    }
+
+    static class TestImpl implements Test {
+    }
+
 public static void main(String[] args) {
     {
         try {
@@ -22,4 +36,5 @@ public static void main(String[] args) {
             // fail
         }
     }
+}
 }

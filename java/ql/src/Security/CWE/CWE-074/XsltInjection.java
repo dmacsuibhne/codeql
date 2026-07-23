@@ -1,8 +1,12 @@
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.Socket;
 import javax.xml.XMLConstants;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+public class XsltInjection {
 public void transform(Socket socket, String inputXml) throws Exception {
   StreamSource xslt = new StreamSource(socket.getInputStream());
   StreamSource xml = new StreamSource(new StringReader(inputXml));
@@ -15,4 +19,5 @@ public void transform(Socket socket, String inputXml) throws Exception {
   // GOOD: The secure processing mode is enabled
   factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
   factory.newTransformer(xslt).transform(xml, new StreamResult(result));
-}  
+}
+}

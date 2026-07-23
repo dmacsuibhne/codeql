@@ -4,7 +4,7 @@ import org.hibernate.validator.constraintvalidation.HibernateConstraintValidator
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TestValidator implements ConstraintValidator<Object, String> {
+public class InsecureBeanValidation implements ConstraintValidator<Object, String> {
 
     public static class InterpolationHelper {
 

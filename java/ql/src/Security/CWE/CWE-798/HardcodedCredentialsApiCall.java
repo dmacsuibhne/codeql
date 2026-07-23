@@ -1,3 +1,8 @@
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class HardcodedCredentialsApiCall {
+
 private static final String p = "123456"; // BAD: hard-coded credential
 
 public static void main(String[] args) throws SQLException {
@@ -9,4 +14,5 @@ public static void main(String[] args) throws SQLException {
 
 public static void getConn(String url, String v, String q) throws SQLException {
     DriverManager.getConnection(url, v, q); // sensitive call
+}
 }

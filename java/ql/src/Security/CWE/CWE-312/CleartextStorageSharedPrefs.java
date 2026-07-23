@@ -1,4 +1,15 @@
-public void testSetSharedPrefs(Context context, String name, String password)
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Base64;
+
+public class CleartextStorageSharedPrefs {
+
+public void testSetSharedPrefs(Context context, String name, String password) throws Exception
 {
 	{
 		// BAD - sensitive information saved in cleartext.
@@ -43,6 +54,7 @@ private static String encrypt(String cleartext) throws Exception {
 	// hash.
 	MessageDigest digest = MessageDigest.getInstance("SHA-256");
 	byte[] hash = digest.digest(cleartext.getBytes(StandardCharsets.UTF_8));
-	String encoded = Base64.getEncoder().encodeToString(hash);
-	return encoded;
+        String encoded = Base64.getEncoder().encodeToString(hash);
+        return encoded;
+}
 }

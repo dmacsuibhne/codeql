@@ -1,5 +1,12 @@
-public class GroovyInjection {
-    void injectionViaClassLoader(HttpServletRequest request) {    
+import javax.servlet.http.HttpServletRequest;
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyCodeSource;
+import groovy.lang.GroovyObject;
+import groovy.lang.GroovyShell;
+import groovy.util.Eval;
+
+public class GroovyInjectionBad {
+    void injectionViaClassLoader(HttpServletRequest request) throws Exception {
         String script = request.getParameter("script");
         final GroovyClassLoader classLoader = new GroovyClassLoader();
         Class groovy = classLoader.parseClass(script); // BAD: Groovy code injection

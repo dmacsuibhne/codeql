@@ -1,3 +1,10 @@
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
+
+public class UseSSL {
 public static void main(String[] args) {
 	{
 		try {
@@ -24,8 +31,9 @@ public static void main(String[] args) {
 			OutputStream os = httpscon.getOutputStream();
 			httpscon.disconnect();
 		}
-		catch (IOException e) {
-			// fail
-		}
-	}
+                catch (IOException e) {
+                        // fail
+                }
+        }
+}
 }

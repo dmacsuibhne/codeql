@@ -6,7 +6,11 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
+public class InstallApkWithFileProvider extends Activity {
+    void install(String assetName) throws IOException {
 String tempFilename = "temporary.apk";
 byte[] buffer = new byte[16384];
 
@@ -30,3 +34,5 @@ intent.setData(applicationUri);
 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 startActivity(intent);
+    }
+}

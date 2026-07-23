@@ -1,22 +1,21 @@
-class Test {
-	public static void main(String[] args) {
-		
-		{		
-			int BIGNUM = Integer.MAX_VALUE;
-			long MAXGET = Short.MAX_VALUE + 1;
-			
-			char[] buf = new char[BIGNUM];
+public class ComparisonWithWiderType {
+        public static void main(String[] args) {
 
-			short bytesReceived = 0;
-			
-			// BAD: 'bytesReceived' is compared with a value of wider type.
-			// 'bytesReceived' overflows before reaching MAXGET,
-			// causing an infinite loop.
-			while (bytesReceived < MAXGET) {
-				bytesReceived += getFromInput(buf, bytesReceived);
-			}
-		}
-		
+                int BIGNUM = Integer.MAX_VALUE;
+                long MAXGET = Short.MAX_VALUE + 1;
+                char[] buf = new char[BIGNUM];
+
+                {
+                        short bytesReceived = 0;
+
+                        // BAD: 'bytesReceived' is compared with a value of wider type.
+                        // 'bytesReceived' overflows before reaching MAXGET,
+                        // causing an infinite loop.
+                        while (bytesReceived < MAXGET) {
+                                bytesReceived += getFromInput(buf, bytesReceived);
+                        }
+                }
+
 		{
 			long bytesReceived2 = 0;
 			
@@ -28,7 +27,7 @@ class Test {
 		
 	}
 	
-	public static int getFromInput(char[] buf, short pos) {
+        public static int getFromInput(char[] buf, long pos) {
 		// write to buf
 		// ...
 		return 1;

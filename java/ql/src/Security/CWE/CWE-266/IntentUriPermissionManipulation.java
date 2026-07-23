@@ -1,3 +1,6 @@
+import android.app.Activity;
+import android.content.Intent;
+
 public class IntentUriPermissionManipulation extends Activity {
 
     // BAD: the user-provided Intent is returned as-is

@@ -1,3 +1,4 @@
+import javax.servlet.http.HttpServletRequest;
 import org.apache.directory.ldap.client.api.LdapConnection;
 import org.apache.directory.api.ldap.model.name.Dn;
 import org.apache.directory.api.ldap.model.name.Rdn;
@@ -5,7 +6,8 @@ import org.apache.directory.api.ldap.model.message.SearchRequest;
 import org.apache.directory.api.ldap.model.message.SearchRequestImpl;
 import static org.apache.directory.ldap.client.api.search.FilterBuilder.equal;
 
-public void ldapQueryGood(HttpServletRequest request, LdapConnection c) {
+public class LdapInjectionApache {
+public void ldapQueryGood(HttpServletRequest request, LdapConnection c) throws Exception {
   String organizationName = request.getParameter("organization_name");
   String username = request.getParameter("username");
 
@@ -19,4 +21,5 @@ public void ldapQueryGood(HttpServletRequest request, LdapConnection c) {
   searchRequest.setBase(safeDn);
   searchRequest.setFilter(safeFilter);
   c.search(searchRequest);
+}
 }

@@ -1,4 +1,20 @@
-final String xmlStr = "<users>" + 
+import java.io.StringReader;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+public class XPathInjection {
+    void run(HttpServletRequest request) {
+final String xmlStr = "<users>" +
                         "   <user name=\"aaa\" pass=\"pass1\"></user>" + 
                         "   <user name=\"bbb\" pass=\"pass2\"></user>" + 
                         "</users>";
@@ -80,4 +96,6 @@ try {
 
 } catch (org.dom4j.DocumentException e) {
 
+}
+    }
 }

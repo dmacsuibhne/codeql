@@ -1,3 +1,10 @@
+import android.app.Fragment;
+import android.preference.PreferenceActivity;
+
+class SafeFragment1 extends Fragment {}
+class SafeFragment2 extends Fragment {}
+class SafeFragment3 extends Fragment {}
+
 class UnsafeActivity extends PreferenceActivity {
 
     @Override

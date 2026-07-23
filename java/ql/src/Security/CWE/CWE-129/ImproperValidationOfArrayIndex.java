@@ -1,3 +1,9 @@
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public class ImproperValidationOfArrayIndex extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -5,7 +11,7 @@ public class ImproperValidationOfArrayIndex extends HttpServlet {
     String[] productDescriptions = new String[] { "Chocolate bar", "Fizzy drink" };
 
     // User provided value
-    String productID = request.getParameter("productID");
+    String userProperty = request.getParameter("productID");
     try {
         int productID = Integer.parseInt(userProperty.trim());
 

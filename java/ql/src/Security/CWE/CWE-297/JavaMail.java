@@ -10,6 +10,15 @@ import javax.mail.Session;
 import org.apache.logging.log4j.util.PropertiesUtil;
 
 class JavaMail {
+    private static Authenticator buildAuthenticator(String username, String password) {
+        return new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        };
+    }
+
     public static void main(String[] args) {
       // BAD: Don't have server certificate check
       {

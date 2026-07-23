@@ -1,4 +1,10 @@
-public class MyActivity extends FragmentActivity {
+import android.app.Fragment;
+import android.os.Bundle;
+import androidx.fragment.app.FragmentActivity;
+
+class MyFragment extends Fragment {}
+
+public class FragmentInjection extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstance) {

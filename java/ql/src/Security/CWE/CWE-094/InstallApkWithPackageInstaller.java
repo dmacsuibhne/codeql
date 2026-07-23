@@ -1,11 +1,24 @@
 // GOOD: Package installed using PackageInstaller
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInstaller;
 
-private static final String PACKAGE_INSTALLED_ACTION =
-    "com.example.SESSION_API_PACKAGE_INSTALLED";
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+public class InstallApkWithPackageInstaller extends Activity {
+
+    private static final String PACKAGE_INSTALLED_ACTION =
+        "com.example.SESSION_API_PACKAGE_INSTALLED";
+
+    private PackageInstaller.Session session;
+    private Context context;
+
+    void install(String assetName) throws IOException {
 /* Create the package installer and session */
 PackageInstaller packageInstaller = getPackageManager().getPackageInstaller();
 PackageInstaller.SessionParams params =
@@ -24,10 +37,12 @@ try (OutputStream packageInSession = session.openWrite("package", 0, -1);
 }
 
 /* Create status receiver */
-Intent intent = new Intent(this, InstallApkSessionApi.class);
+Intent intent = new Intent(this, InstallApkWithPackageInstaller.class);
 intent.setAction(PACKAGE_INSTALLED_ACTION);
 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 IntentSender statusReceiver = pendingIntent.getIntentSender();
 
 /* Commit the session */
 session.commit(statusReceiver);
+    }
+}

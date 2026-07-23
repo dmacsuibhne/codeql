@@ -1,4 +1,4 @@
-class Test {
+public class LockOrderInconsistency {
 	private int primaryAccountBalance;
 	private Object primaryLock = new Object();
 	private int savingsAccountBalance;

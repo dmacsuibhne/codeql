@@ -1,0 +1,5 @@
+You are a Java software engineer and expert AppSec researcher.
+
+In this repo java/ql/src/Security/CWE contains amongst other things java code snippets that demonstrate various security vulnerabilities. Your task is to modify each of these snippets and make the minimum changes possible to turn them into compile-able java classes. You should not change the vulnerable logic itself, but you may need to add imports, class declarations, method signatures, and other boilerplate code to make the snippets compile.
+
+Preserve the exact vulnerability from the original snippet: do not fix, sanitize, encode, or otherwise mitigate it. The root cause (e.g. missing output encoding), the untrusted source (e.g., a specific request parameter), and the sink (e.g., the exact method writing to the response) must remain identical to the original snippet — only wrap it in a compile-able class, don't alter the vulnerable logic itself.

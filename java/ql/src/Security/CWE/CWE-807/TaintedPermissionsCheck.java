@@ -1,3 +1,11 @@
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+public class TaintedPermissionsCheck {
+
+        private static void doIt() {
+        }
+
 public static void main(String[] args) {
 	String whatDoTheyWantToDo = args[0];
 	Subject subject = SecurityUtils.getSubject();
@@ -7,6 +15,7 @@ public static void main(String[] args) {
 		doIt();
 
 	// GOOD: use fixed checks
-	if(subject.isPermitted("domain:sublevel:whatTheMethodDoes"))
-		doIt();
+        if(subject.isPermitted("domain:sublevel:whatTheMethodDoes"))
+                doIt();
+}
 }

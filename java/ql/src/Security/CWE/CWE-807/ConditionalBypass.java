@@ -1,22 +1,39 @@
-public boolean doLogin(String user, String password) {
-	Cookie adminCookie = getCookies()[0];
+import javax.servlet.http.Cookie;
 
-	// BAD: login is executed only if the value of 'adminCookie' is 'false', 
-	// but 'adminCookie' is controlled by the user
-	if(adminCookie.getValue()=="false")
-		return login(user, password);
-	
-	return true;
+public class ConditionalBypass {
+
+        private Cookie[] getCookies() {
+                return new Cookie[0]; //todo This will need to return a cookie to be checked
+        }
+
+        private boolean login(String user, String password) {
+                return true;
+        }
+
+        private boolean queryDbForAdminStatus(String user, String password) {
+                return false;
+        }
+
+public boolean doLogin(String user, String password) {
+        Cookie adminCookie = getCookies()[0];
+
+        // BAD: login is executed only if the value of 'adminCookie' is 'false',
+        // but 'adminCookie' is controlled by the user
+        if(adminCookie.getValue()=="false")
+                return login(user, password);
+
+        return true;
 }
 
-public boolean doLogin(String user, String password) {
-	Cookie adminCookie = getCookies()[0];
-	
-	// GOOD: use server-side information based on the credentials to decide
-	// whether user has privileges
-	boolean isAdmin = queryDbForAdminStatus(user, password);
-	if(!isAdmin)
-		return login(user, password);
-	
-	return true;
+public boolean doLoginGood(String user, String password) {
+        Cookie adminCookie = getCookies()[0];
+
+        // GOOD: use server-side information based on the credentials to decide
+        // whether user has privileges
+        boolean isAdmin = queryDbForAdminStatus(user, password);
+        if(!isAdmin)
+                return login(user, password);
+
+        return true;
+}
 }

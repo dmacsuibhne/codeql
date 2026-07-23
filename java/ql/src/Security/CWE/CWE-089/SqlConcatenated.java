@@ -1,3 +1,17 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SqlConcatenated {
+    private Connection connection;
+
+    private String getCategory() {
+        return "";
+    }
+
+    void run() throws SQLException {
 {
     // BAD: the category might have SQL special characters in it
     String category = getCategory();
@@ -14,4 +28,6 @@
     PreparedStatement statement = connection.prepareStatement(query2);
     statement.setString(1, category);
     ResultSet results = statement.executeQuery();
+}
+    }
 }

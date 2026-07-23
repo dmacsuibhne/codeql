@@ -1,8 +1,11 @@
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.net.Uri;
 
-public class Example extends Activity {
-    public void onCreate() {
+import java.io.InputStream;
+
+public class UnsafeContentUriResolution extends Activity {
+    public void onCreate() throws Exception {
         // BAD: Externally-provided URI directly used in content resolution
         {
             ContentResolver contentResolver = getContentResolver();

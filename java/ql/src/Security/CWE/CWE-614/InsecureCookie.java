@@ -1,3 +1,8 @@
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class InsecureCookie {
 public static void test(HttpServletRequest request, HttpServletResponse response) {
 	{
 		Cookie cookie = new Cookie("secret", "fakesecret");
@@ -11,6 +16,7 @@ public static void test(HttpServletRequest request, HttpServletResponse response
 		
 		// GOOD: set 'secure' flag
 		cookie.setSecure(true);
-		response.addCookie(cookie);
-	}
+                response.addCookie(cookie);
+        }
+}
 }

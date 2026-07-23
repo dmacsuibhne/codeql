@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 /**
  * Utility class for generating random Strings.
  */
-public final class RandomUtil {
+public final class JHipsterGeneratedPRNGFixed {
     private static final SecureRandom SECURE_RANDOM = new SecureRandom(); // GOOD: Using SecureRandom
 
     private static final int DEF_COUNT = 20;
@@ -14,7 +14,7 @@ public final class RandomUtil {
         SECURE_RANDOM.nextBytes(new byte[64]);
     }
 
-    private RandomUtil() {
+    private JHipsterGeneratedPRNGFixed() {
     }
 
     private static String generateRandomAlphanumericString() {

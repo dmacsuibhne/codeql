@@ -1,4 +1,17 @@
-public class ResponseSplitting extends HttpServlet {
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ExternallyControlledFormatString extends HttpServlet {
+
+  private boolean notValid(String value) {
+    return true;
+  }
+
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
   throws ServletException, IOException {
     Calendar expirationDate = new GregorianCalendar(2017, GregorianCalendar.SEPTEMBER, 1);

@@ -1,4 +1,14 @@
-protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+import java.io.IOException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class StackTraceExposure extends HttpServlet {
+
+        private void doSomeWork() {
+        }
+
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	try {
 		doSomeWork();
 	} catch (NullPointerException ex) {
@@ -15,6 +25,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		response.sendError(
 			HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 			"Exception occurred");
-		return;
-	}
+                return;
+        }
+}
 }
