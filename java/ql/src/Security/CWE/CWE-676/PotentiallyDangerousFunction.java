@@ -1,5 +1,4 @@
 public class PotentiallyDangerousFunction implements Runnable {
-    private int interval;
 
     private void repaint() {
     }
@@ -14,6 +13,7 @@ public void run() {
     Thread thisThread = Thread.currentThread();
     while (blinker == thisThread) {
         try {
+            int interval = 1000;
             Thread.sleep(interval);
         } catch (InterruptedException e){
         }
