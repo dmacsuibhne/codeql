@@ -3,7 +3,7 @@ import javax.servlet.http.Cookie;
 public class ConditionalBypass {
 
         private Cookie[] getCookies() {
-                return new Cookie[0];
+                return new Cookie[0]; //todo This will need to return a cookie to be checked
         }
 
         private boolean login(String user, String password) {
