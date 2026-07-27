@@ -1,0 +1,11 @@
+You are a Java software engineer and expert AppSec researcher.
+
+In this repo java/ql/src/Security/CWE contains amongst other things java sample classes that demonstrate various security vulnerabilities. examplesVulnerable.txt lists these relevant classes. All other classes are not relevant to this task.
+
+Your task:
+Convert the collection of classes into a fully functional, end-to-end, runnable Java application — not standalone examples. Include all necessary build files (e.g., Maven pom.xml), an embeddable server (e.g., embedded Jetty or Tomcat), and a Main class that starts the server and exposes the vulnerable endpoint.
+Add realistic handling of user input appropriate to the vulnerable test case (e.g., a real HTTP GET parameter reaching the vulnerable code path via a real servlet mapping), so the vulnerability is reachable, exploitable and triggerable through an actual HTTP request, not a synthetic/mocked call. Add one or more realistic end-to-end automatic test cases that exercise the vulnerable code for each class. The test cases must not be actual working payloads but any user input that successfully exercise the vulnerable code path.
+Use open source dependencies only (state their license type), and prefer widely used, actively maintained libraries.
+Preserve the exact vulnerability from the original snippet: do not fix, sanitize, encode, or otherwise mitigate it. The root cause (e.g. missing output encoding), the untrusted source (e.g., a specific request parameter), and the sink (e.g., the exact method writing to the response) must remain identical to the original snippet — only wrap it in a runnable app, don't alter the vulnerable logic itself.
+Provide clear build/run/test instructions (e.g., mvn clean package + java -jar ...) and an example malicious URL/payload that demonstrates the exploit (e.g., a script tag reflected in the response) and how to execute the automated test cases that exercise the vulnerable code.
+Include a short README section describing: vulnerability type/CWE ID, source, sink, root cause, and a disclaimer that this is intentionally vulnerable code for research/testing only, not for production deployment.
