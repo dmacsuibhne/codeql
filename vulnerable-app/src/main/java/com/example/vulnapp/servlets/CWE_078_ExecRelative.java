@@ -4,13 +4,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/** CWE-078: relative-path command execution. Sink: Runtime.getRuntime().exec("make") (split to avoid a local scanner). */
+/** CWE-078: relative-path command execution. Sink: Runtime.getRuntime().exec("make"). */
 public class CWE_078_ExecRelative extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Runtime rt = Runtime.getRuntime();
-            rt.exec("make"); // BAD: relative path
+            // BAD: relative path
+            Runtime.getRuntime().exec("make");
         } catch (Exception e) {
             // command may be absent; the sink has still been reached
         }

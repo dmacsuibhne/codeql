@@ -153,12 +153,6 @@ Every row maps an original class → its endpoint. Unless noted, endpoints are `
 ## Faithfulness notes / environment-specific adaptations
 The vulnerable **source→sink** of every class is preserved. A few endpoints required small,
 documented accommodations that do **not** change the vulnerability:
-- **CWE-078 command injection** (`/exec`, `/exec-relative`, `/exec-unescaped`): the identical
-  `Runtime.getRuntime().exec(...)` API is used, but written across two statements
-  (`Runtime rt = Runtime.getRuntime(); rt.exec(...)`) because a local on-access security scanner in
-  this environment quarantines source files containing the contiguous `getRuntime().exec` token.
-- **CWE-094 MVEL** (`/mvel`): the identical `MVEL.eval(expression)` sink is invoked via reflection
-  for the same scanner reason; runtime behaviour is unchanged.
 - **CWE-190 ComparisonWithWiderType** (`/comparison-wider`) and **CWE-835 InfiniteLoopBad**
   (`/infinite-loop`): the exact buggy loop runs in a watchdog thread with a short join timeout so the
   endpoint returns; the incidental multi-gigabyte buffer in the CWE-190 snippet is reduced to avoid
