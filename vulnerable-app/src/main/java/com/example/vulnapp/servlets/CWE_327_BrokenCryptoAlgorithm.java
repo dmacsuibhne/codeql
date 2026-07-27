@@ -17,6 +17,10 @@ public class CWE_327_BrokenCryptoAlgorithm extends HttpServlet {
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(input.getBytes("UTF-8"));
+
+            // GOOD: AES is a strong algorithm
+            Cipher aes = Cipher.getInstance("AES");
+
             response.getWriter().print("encrypted " + encrypted.length + " bytes");
         } catch (Exception e) {
             throw new ServletException(e);

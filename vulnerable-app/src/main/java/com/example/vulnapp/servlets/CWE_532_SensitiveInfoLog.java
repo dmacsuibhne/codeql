@@ -14,6 +14,10 @@ public class CWE_532_SensitiveInfoLog extends HttpServlet {
         String password = request.getParameter("password");
         // BAD: user password is written to debug log
         logger.debug("User password is " + password);
+
+        // GOOD: user password is never written to debug log
+        logger.debug("User password changed");
+
         response.getWriter().print("logged");
     }
 }

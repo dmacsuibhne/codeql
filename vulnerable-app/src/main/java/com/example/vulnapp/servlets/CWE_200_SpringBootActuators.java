@@ -26,6 +26,9 @@ public class CWE_200_SpringBootActuators extends HttpServlet {
             http.requestMatcher(EndpointRequest.toAnyEndpoint());
             // BAD: Unauthenticated access to Spring Boot actuator endpoints is allowed
             http.authorizeHttpRequests((requests) -> requests.anyRequest().permitAll());
+
+            // GOOD: only users with ENDPOINT_ADMIN role are allowed to access the actuator endpoints
+            http.authorizeHttpRequests((requests) -> requests.anyRequest().hasRole("ENDPOINT_ADMIN"));
             response.getWriter().print("actuators permitAll");
         } catch (Exception e) {
             response.getWriter().print("actuator config reached");

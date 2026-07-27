@@ -19,6 +19,13 @@ public class CWE_367_TOCTOURace extends HttpServlet {
             r.act();
         }
     }
+    public synchronized void good(Resource r) {
+        synchronized (r) { // GOOD: r is locked
+            if (r.isReady()) {
+                r.act();
+            }
+        }
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         bad(new Resource());

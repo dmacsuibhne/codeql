@@ -10,12 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 public class CWE_421_SocketAuthRace extends HttpServlet {
     private final byte[] secretData = "secret".getBytes();
     private boolean isAuthenticated(String username) { return true; }
+    private boolean doAuthenticate(Socket connection, String username) { return true; }
     public void doConnect(ServerSocket listenSocket, String username) throws IOException {
         if (isAuthenticated(username)) {
             Socket connection1 = listenSocket.accept();
             // BAD: no authentication over the socket connection
             connection1.getOutputStream().write(secretData);
             connection1.close();
+        }
+    }
+    public void doConnectGood(ServerSocket listenSocket, String username) throws IOException {
+        Socket connection2 = listenSocket.accept();
+        // GOOD: authentication happens over the socket
+        if (doAuthenticate(connection2, username)) {
+            connection2.getOutputStream().write(secretData);
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

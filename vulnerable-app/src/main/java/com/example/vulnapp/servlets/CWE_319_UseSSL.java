@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,17 @@ public class CWE_319_UseSSL extends HttpServlet {
             response.getWriter().print("opened stream");
         } catch (Exception e) {
             response.getWriter().print("stream attempted");
+        }
+
+        try {
+            URL u = new URL("https://www.secret.example.org/");
+            HttpsURLConnection httpscon = (HttpsURLConnection) u.openConnection();
+            httpscon.setRequestMethod("PUT");
+            httpscon.setDoOutput(true);
+            // GOOD: output stream from HTTPS connection
+            OutputStream os = httpscon.getOutputStream();
+        } catch (Exception e) {
+            // fail
         }
     }
 }

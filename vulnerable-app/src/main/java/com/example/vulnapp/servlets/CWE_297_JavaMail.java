@@ -30,6 +30,19 @@ public class CWE_297_JavaMail extends HttpServlet {
         }
         // BAD: no mail.smtp.ssl.checkserveridentity set
         final Session session = Session.getInstance(properties, authenticator);
+
+        // GOOD: Have server certificate check
+        final Properties goodProperties = PropertiesUtil.getSystemProperties();
+        goodProperties.put("mail.transport.protocol", "protocol");
+        goodProperties.put("mail.smtp.host", "hostname");
+        goodProperties.put("mail.smtp.socketFactory.class", "classname");
+        final Authenticator goodAuthenticator = buildAuthenticator("username", "password");
+        if (null != goodAuthenticator) {
+            goodProperties.put("mail.smtp.auth", "true");
+            goodProperties.put("mail.smtp.ssl.checkserveridentity", "true");
+        }
+        final Session goodSession = Session.getInstance(goodProperties, goodAuthenticator);
+
         response.getWriter().print("session created " + (session != null));
     }
 }

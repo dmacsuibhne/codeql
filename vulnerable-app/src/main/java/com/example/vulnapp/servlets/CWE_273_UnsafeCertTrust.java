@@ -12,6 +12,12 @@ public class CWE_273_UnsafeCertTrust extends HttpServlet {
             com.rabbitmq.client.ConnectionFactory connectionFactory = new com.rabbitmq.client.ConnectionFactory();
             // BAD: Hostname verification for rabbitmq ConnectionFactory is not enabled
             connectionFactory.useSslProtocol();
+
+            com.rabbitmq.client.ConnectionFactory goodConnectionFactory = new com.rabbitmq.client.ConnectionFactory();
+            goodConnectionFactory.useSslProtocol();
+            // GOOD: Enable hostname verification for rabbitmq ConnectionFactory
+            goodConnectionFactory.enableHostnameVerification();
+
             response.getWriter().print("ssl configured");
         } catch (Exception e) {
             throw new ServletException(e);

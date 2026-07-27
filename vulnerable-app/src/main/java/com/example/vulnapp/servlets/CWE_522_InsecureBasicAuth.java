@@ -14,6 +14,10 @@ public class CWE_522_InsecureBasicAuth extends HttpServlet {
         String password = request.getParameter("password");
         // BAD: basic authentication over HTTP
         String url = "http://www.example.com/rest/getuser.do?uid=abcdx";
+
+        // GOOD: basic authentication over HTTPS
+        String secureUrl = "https://www.example.com/rest/getuser.do?uid=abcdx";
+
         HttpPost post = new HttpPost(url);
         post.setHeader("Accept", "application/json");
         String authString = username + ":" + password;

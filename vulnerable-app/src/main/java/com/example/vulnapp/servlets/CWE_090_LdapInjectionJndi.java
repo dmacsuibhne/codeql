@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.owasp.esapi.Encoder;
+import org.owasp.esapi.reference.DefaultEncoder;
+
 /**
  * CWE-090: LDAP Injection.
  * Source: request parameters "organization_name" and "username".
@@ -34,6 +37,24 @@ public class CWE_090_LdapInjectionJndi extends HttpServlet {
         try {
             DirContext ctx = createContext();
             ctx.search(dn, filter, new SearchControls());
+
+            try {
+                // ESAPI encoder
+                Encoder encoder = DefaultEncoder.getInstance();
+
+                // GOOD: Organization name is encoded before being used in DN
+                String safeOrganizationName = encoder.encodeForDN(organizationName);
+                String safeDn = "OU=People,O=" + safeOrganizationName;
+
+                // GOOD: User input is encoded before being used in search filter
+                String safeUsername = encoder.encodeForLDAP(username);
+                String safeFilter = "username=" + safeUsername;
+
+                ctx.search(safeDn, safeFilter, new SearchControls());
+            } catch (Throwable esapiUnavailable) {
+                // The GOOD branch is retained for comparison with the original snippet; it needs an
+                // ESAPI.properties configuration that is not shipped here, so its failure is ignored.
+            }
             response.getWriter().print("searched");
         } catch (Exception e) {
             throw new ServletException(e);
