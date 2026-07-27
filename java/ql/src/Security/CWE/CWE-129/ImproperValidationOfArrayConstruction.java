@@ -15,6 +15,12 @@ public class CWE_129_ImproperValidationOfArrayConstruction extends HttpServlet {
                 String[] items = new String[numberOfItems];
                 items[0] = "Item 1";
             }
+
+            if (numberOfItems > 0) {
+                // GOOD numberOfItems must be greater than zero, so the indexing succeeds.
+                String[] items = new String[numberOfItems];
+                items[0] = "Item 1";
+            }
             response.getWriter().print("ok");
         } catch (NumberFormatException e) {
         }

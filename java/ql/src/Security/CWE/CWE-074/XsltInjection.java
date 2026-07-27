@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -20,6 +21,12 @@ public class CWE_074_XsltInjection extends HttpServlet {
             TransformerFactory factory = TransformerFactory.newInstance();
             // BAD: User provided XSLT stylesheet is processed
             factory.newTransformer(xslt).transform(xml, new StreamResult(result));
+
+            // GOOD: The secure processing mode is enabled
+            StreamSource xsltGood = new StreamSource(new StringReader(request.getParameter("xslt")));
+            StreamSource xmlGood = new StreamSource(new StringReader("<a/>"));
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            factory.newTransformer(xsltGood).transform(xmlGood, new StreamResult(result));
             response.getWriter().print("transformed");
         } catch (Exception e) {
             throw new ServletException(e);

@@ -12,6 +12,12 @@ public class CWE_614_InsecureCookie extends HttpServlet {
         Cookie cookie = new Cookie("secret", "fakesecret");
         // BAD: 'secure' flag not set
         response.addCookie(cookie);
+
+        Cookie goodCookie = new Cookie("secret", "fakesecret");
+        // GOOD: set 'secure' flag
+        goodCookie.setSecure(true);
+        response.addCookie(goodCookie);
+
         response.getWriter().print("cookie set");
     }
 }

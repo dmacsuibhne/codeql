@@ -19,5 +19,12 @@ public class CWE_129_ImproperValidationOfArrayIndexCodeSpecified extends HttpSer
         }
         // BAD: foundProductID may be -1
         response.getWriter().write(productDescriptions[foundProductID]);
+
+        if (foundProductID >= 0) {
+            // GOOD We have checked we found a product first
+            response.getWriter().write(productDescriptions[foundProductID]);
+        } else {
+            response.getWriter().write("No product found");
+        }
     }
 }

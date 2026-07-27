@@ -17,6 +17,14 @@ public class CWE_681_NumericCastTainted extends HttpServlet {
         }
         // AVOID: potential truncation if input data is very large
         int scaled = (int) data;
+
+        // GOOD: use a guard to ensure no truncation occurs
+        int scaled2;
+        if (data > Integer.MIN_VALUE && data < Integer.MAX_VALUE)
+            scaled2 = (int) data;
+        else
+            throw new IllegalArgumentException("Invalid input");
+
         response.getWriter().print("scaled=" + scaled);
     }
 }

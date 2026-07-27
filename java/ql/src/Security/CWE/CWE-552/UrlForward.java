@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  * Root cause: user input used as a forward target without validation.
  */
 public class CWE_552_UrlForward extends HttpServlet {
+    private static final String VALID_FORWARD = "https://cwe.mitre.org/data/definitions/552.html";
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletConfig cfg = getServletConfig();
@@ -21,6 +23,11 @@ public class CWE_552_UrlForward extends HttpServlet {
 
         // BAD: a request parameter is incorporated without validation into a URL forward
         sc.getRequestDispatcher(request.getParameter("target")).forward(request, response);
+
+        // GOOD: the request parameter is validated against a known fixed string
+        if (VALID_FORWARD.equals(request.getParameter("target"))) {
+            sc.getRequestDispatcher(VALID_FORWARD).forward(request, response);
+        }
     }
 }
 

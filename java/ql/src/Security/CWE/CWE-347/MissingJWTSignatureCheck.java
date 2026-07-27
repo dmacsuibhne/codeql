@@ -13,6 +13,11 @@ public class CWE_347_MissingJWTSignatureCheck extends HttpServlet {
         try {
             // BAD: Does not verify the signature
             Jwts.parserBuilder().setSigningKey("someBase64EncodedKey").build().parse(token);
+
+            // GOOD: Verify the signature
+            Jwts.parserBuilder().setSigningKey("someBase64EncodedKey").build()
+                    .parseClaimsJws(token)
+                    .getBody();
             response.getWriter().print("parsed");
         } catch (Exception e) {
             response.getWriter().print("parse attempted");

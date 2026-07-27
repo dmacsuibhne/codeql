@@ -20,5 +20,15 @@ public class CWE_319_HttpsUrls extends HttpServlet {
         } catch (Exception e) {
             response.getWriter().print("classcast reached");
         }
+
+        try {
+            String protocol = "https://";
+            URL u = new URL(protocol + "www.secret.example.org/");
+            // GOOD: Opening a connection to a URL using HTTPS enforces SSL.
+            HttpsURLConnection hu = (HttpsURLConnection) u.openConnection();
+            hu.setRequestMethod("PUT");
+        } catch (Exception e) {
+            // fail
+        }
     }
 }

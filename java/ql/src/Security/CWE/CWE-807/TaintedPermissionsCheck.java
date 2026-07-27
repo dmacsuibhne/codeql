@@ -18,6 +18,10 @@ public class CWE_807_TaintedPermissionsCheck extends HttpServlet {
         Subject subject = SecurityUtils.getSubject();
         // BAD: permissions decision made using tainted data
         boolean permitted = subject.isPermitted("domain:sublevel:" + whatDoTheyWantToDo);
+
+        // GOOD: use fixed checks
+        boolean permittedGood = subject.isPermitted("domain:sublevel:whatTheMethodDoes");
+
         response.getWriter().print("permitted=" + permitted);
     }
 }
