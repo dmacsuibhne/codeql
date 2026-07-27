@@ -15,6 +15,12 @@ public class CWE_129_ImproperValidationOfArrayConstructionCodeSpecified extends 
             String[] items = new String[numberOfItems];
             items[0] = "Item 1";
         }
+
+        if (numberOfItems > 0) {
+            // GOOD numberOfItems must be greater than zero, so the indexing succeeds.
+            String[] items = new String[numberOfItems];
+            items[0] = "Item 1";
+        }
         response.getWriter().print("ok");
     }
 }

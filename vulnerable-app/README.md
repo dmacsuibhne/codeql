@@ -39,6 +39,7 @@ compatible (Spring Boot 2.7 still targets `javax.*`, matching the snippets).
 | SLF4J + slf4j-simple | 117 log injection | MIT |
 | Log4j2 (log4j-core/api) | 297 JavaMail, 532 | Apache-2.0 |
 | UnboundID LDAP SDK | 090, 522 (in-memory LDAP) | Apache-2.0 |
+| OWASP ESAPI | 090 LDAP GOOD-branch encoder | BSD-3-Clause |
 | Apache Groovy | 094 Groovy | Apache-2.0 |
 | MVEL2 | 094 MVEL | Apache-2.0 |
 | Apache Commons JEXL3 | 094 JEXL | Apache-2.0 |
@@ -153,6 +154,13 @@ Every row maps an original class → its endpoint. Unless noted, endpoints are `
 ## Faithfulness notes / environment-specific adaptations
 The vulnerable **source→sink** of every class is preserved. A few endpoints required small,
 documented accommodations that do **not** change the vulnerability:
+- **GOOD counterpart branches restored:** for classes whose original snippet contained both a
+  `// BAD` sink and a `// GOOD` (safe) alternative, both are now reproduced in the servlet so it
+  diffs cleanly against the original. The BAD sink remains the unmitigated vulnerability; the GOOD
+  branch is included for comparison. Where a GOOD branch needs infrastructure not shipped here
+  (e.g. the CWE-090 ESAPI encoder's `ESAPI.properties`, the CWE-1004 `javax.ws.rs` `NewCookie`
+  runtime, the CWE-295 self-signed certificate file), that GOOD branch is wrapped in its own
+  `try/catch` so its absence cannot mask or break the BAD sink.
 - **CWE-190 ComparisonWithWiderType** (`/comparison-wider`) and **CWE-835 InfiniteLoopBad**
   (`/infinite-loop`): the exact buggy loop runs in a watchdog thread with a short join timeout so the
   endpoint returns; the incidental multi-gigabyte buffer in the CWE-190 snippet is reduced to avoid

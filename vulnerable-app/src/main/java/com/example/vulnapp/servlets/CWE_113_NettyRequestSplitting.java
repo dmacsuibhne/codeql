@@ -16,6 +16,11 @@ public class CWE_113_NettyRequestSplitting extends HttpServlet {
         // BAD: Disables the internal request splitting verification
         DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(false);
         DefaultHttpRequest badRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, uri, false);
+
+        // GOOD: Verifies headers passed don't contain CRLF characters
+        DefaultHttpHeaders goodHeaders = new DefaultHttpHeaders();
+        DefaultHttpRequest goodRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, uri);
+
         response.getWriter().print("built " + badRequest.method() + " headers=" + badHeaders.size());
     }
 }

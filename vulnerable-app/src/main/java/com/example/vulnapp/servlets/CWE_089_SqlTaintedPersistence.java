@@ -27,6 +27,25 @@ public class CWE_089_SqlTaintedPersistence extends HttpServlet {
                     + category + "' ORDER BY p.price";
             Query q = entityManager.createQuery(query1);
             int n = q.getResultList().size();
+
+            // GOOD: use a named parameter and set its value
+            String query2 = "SELECT p FROM Product p WHERE p.category LIKE :category ORDER BY p.price";
+            Query q2 = entityManager.createQuery(query2);
+            q2.setParameter("category", category);
+
+            // GOOD: use a positional parameter and set its value
+            String query3 = "SELECT p FROM Product p WHERE p.category LIKE ?1 ORDER BY p.price";
+            Query q3 = entityManager.createQuery(query3);
+            q3.setParameter(1, category);
+
+            // GOOD: use a named query with a named parameter and set its value
+            Query namedQuery1 = entityManager.createNamedQuery("lookupByCategory");
+            namedQuery1.setParameter("category", category);
+
+            // GOOD: use a named query with a positional parameter and set its value
+            Query namedQuery2 = entityManager.createNamedQuery("lookupByCategory");
+            namedQuery2.setParameter(1, category);
+
             entityManager.close();
             response.getWriter().print("rows=" + n);
         } catch (Exception e) {

@@ -17,6 +17,14 @@ public class CWE_190_ArithmeticTainted extends HttpServlet {
         }
         // BAD: may overflow if input data is very large
         int scaled = data * 10;
+
+        // GOOD: use a guard to ensure no overflows occur
+        int scaled2;
+        if (data < Integer.MAX_VALUE / 10)
+            scaled2 = data * 10;
+        else
+            scaled2 = Integer.MAX_VALUE;
+
         response.getWriter().print("scaled=" + scaled);
     }
 }

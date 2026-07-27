@@ -5,6 +5,7 @@ import com.example.vulnapp.Backends;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.servlet.ServletException;
@@ -32,6 +33,12 @@ public class CWE_089_SqlTainted extends HttpServlet {
             while (results.next()) {
                 out.println(results.getString("ITEM") + " : " + results.getInt("PRICE"));
             }
+
+            // GOOD: use a prepared query
+            String query2 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY=? ORDER BY PRICE";
+            PreparedStatement prepared = connection.prepareStatement(query2);
+            prepared.setString(1, category);
+            ResultSet safeResults = prepared.executeQuery();
         } catch (Exception e) {
             throw new ServletException(e);
         }

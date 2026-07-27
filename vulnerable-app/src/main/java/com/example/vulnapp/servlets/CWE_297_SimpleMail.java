@@ -17,12 +17,26 @@ public class CWE_297_SimpleMail extends HttpServlet {
             email.setSmtpPort(25);
             email.setAuthenticator(new DefaultAuthenticator("username", "password"));
             email.setSSLOnConnect(true);
-            // BAD: setSSLCheckServerIdentity not set
+            // BAD: setSSLCheckServerIdentity not set (or set to false)
             email.setFrom("from@example.com");
             email.setSubject("subject");
             email.setMsg("body");
             email.addTo("to@example.com");
             email.send();
+
+            // GOOD: Have setSSLCheckServerIdentity set to true
+            Email goodEmail = new SimpleEmail();
+            goodEmail.setHostName("hostName");
+            goodEmail.setSmtpPort(25);
+            goodEmail.setAuthenticator(new DefaultAuthenticator("username", "password"));
+            goodEmail.setSSLOnConnect(true);
+            goodEmail.setSSLCheckServerIdentity(true);
+            goodEmail.setFrom("from@example.com");
+            goodEmail.setSubject("subject");
+            goodEmail.setMsg("body");
+            goodEmail.addTo("to@example.com");
+            goodEmail.send();
+
             response.getWriter().print("sent");
         } catch (Exception e) {
             response.getWriter().print("send attempted");

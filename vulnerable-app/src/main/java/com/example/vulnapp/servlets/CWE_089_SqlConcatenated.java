@@ -2,6 +2,7 @@ package com.example.vulnapp.servlets;
 import com.example.vulnapp.Backends;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.servlet.ServletException;
@@ -21,6 +22,13 @@ public class CWE_089_SqlConcatenated extends HttpServlet {
             ResultSet results = statement.executeQuery(query1);
             int n = 0;
             while (results.next()) { n++; }
+
+            // GOOD: use a prepared query
+            String query2 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY=? ORDER BY PRICE";
+            PreparedStatement prepared = connection.prepareStatement(query2);
+            prepared.setString(1, category);
+            ResultSet safeResults = prepared.executeQuery();
+
             response.getWriter().print("rows=" + n);
         } catch (Exception e) {
             throw new ServletException(e);

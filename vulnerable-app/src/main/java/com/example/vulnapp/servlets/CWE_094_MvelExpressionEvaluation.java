@@ -16,9 +16,18 @@ public class CWE_094_MvelExpressionEvaluation extends HttpServlet {
         try {
             // BAD: the user-provided expression is directly evaluated
             Object result = MVEL.eval(expression);
+
+            // GOOD: the user-provided expression is validated before evaluation
+            validateExpression(expression);
+            MVEL.eval(expression);
             response.getWriter().print("result=" + result);
         } catch (Exception e) {
             response.getWriter().print("evaluated");
         }
+    }
+
+    private void validateExpression(String expression) {
+        // Validate that the expression does not contain unexpected code.
+        // For instance, this can be done with allow-lists or deny-lists of code patterns.
     }
 }

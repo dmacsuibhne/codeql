@@ -11,6 +11,11 @@ public class CWE_190_ArithmeticWithExtremeValues extends HttpServlet {
         long i = Long.MAX_VALUE;
         // BAD: overflow
         long j = i + 1;
+
+        // GOOD: no overflow
+        int i2 = Integer.MAX_VALUE;
+        long j2 = (long) i2 + 1;
+
         response.getWriter().print("j=" + j);
     }
 }

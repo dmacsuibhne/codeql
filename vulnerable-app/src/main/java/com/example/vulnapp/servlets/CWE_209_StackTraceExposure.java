@@ -8,12 +8,24 @@ public class CWE_209_StackTraceExposure extends HttpServlet {
     private void doSomeWork() {
         throw new NullPointerException("boom");
     }
+    private void logException(String message, Throwable ex) {
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             doSomeWork();
         } catch (NullPointerException ex) {
             // BAD: printing a stack trace back to the response
             ex.printStackTrace(response.getWriter());
+            return;
+        }
+
+        try {
+            doSomeWork();
+        } catch (NullPointerException ex) {
+            // GOOD: log the stack trace, and send back a non-revealing response
+            logException("Exception occurred", ex);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Exception occurred");
+            return;
         }
     }
 }

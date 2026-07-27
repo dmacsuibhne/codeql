@@ -13,6 +13,15 @@ public class CWE_335_PredictableSeed extends HttpServlet {
         // BAD: constant seed makes output predictable
         prng.setSeed(12345L);
         int randomData = prng.nextInt();
+
+        // BAD: System.currentTimeMillis() returns the system time which is predictable.
+        prng.setSeed(System.currentTimeMillis());
+        randomData = prng.nextInt();
+
+        // GOOD: SecureRandom implementations seed themselves securely by default.
+        prng = new SecureRandom();
+        randomData = prng.nextInt();
+
         response.getWriter().print("value=" + randomData);
     }
 }

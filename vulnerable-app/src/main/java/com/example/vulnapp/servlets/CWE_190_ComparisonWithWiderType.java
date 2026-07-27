@@ -15,10 +15,19 @@ public class CWE_190_ComparisonWithWiderType extends HttpServlet {
         Thread t = new Thread(() -> {
             long MAXGET = Short.MAX_VALUE + 1;
             char[] buf = new char[1024];
-            short bytesReceived = 0;
-            // BAD: 'bytesReceived' (short) compared with a wider type; overflows before reaching MAXGET
-            while (bytesReceived < MAXGET) {
-                bytesReceived += getFromInput(buf, bytesReceived);
+            {
+                short bytesReceived = 0;
+                // BAD: 'bytesReceived' (short) compared with a wider type; overflows before reaching MAXGET
+                while (bytesReceived < MAXGET) {
+                    bytesReceived += getFromInput(buf, bytesReceived);
+                }
+            }
+            {
+                long bytesReceived2 = 0;
+                // GOOD: 'bytesReceived2' has a type at least as wide as MAXGET.
+                while (bytesReceived2 < MAXGET) {
+                    bytesReceived2 += getFromInput(buf, bytesReceived2);
+                }
             }
         });
         t.setDaemon(true);

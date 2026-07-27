@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * Root cause: user input used to build an outbound HTTP request without validation.
  */
 public class CWE_918_RequestForgery extends HttpServlet {
+    private static final String VALID_URI = "http://lgtm.com";
     private final HttpClient client = HttpClient.newHttpClient();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,6 +26,12 @@ public class CWE_918_RequestForgery extends HttpServlet {
             // BAD: a request parameter is incorporated without validation into a Http request
             HttpRequest r = HttpRequest.newBuilder(uri).build();
             client.send(r, HttpResponse.BodyHandlers.discarding());
+
+            // GOOD: the request parameter is validated against a known fixed string
+            if (VALID_URI.equals(request.getParameter("uri"))) {
+                HttpRequest r2 = HttpRequest.newBuilder(uri).build();
+                client.send(r2, HttpResponse.BodyHandlers.discarding());
+            }
             response.getWriter().print("sent");
         } catch (Exception e) {
             throw new ServletException(e);

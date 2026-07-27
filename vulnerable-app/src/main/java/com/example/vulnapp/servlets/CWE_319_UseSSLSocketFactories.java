@@ -2,6 +2,8 @@ package com.example.vulnapp.servlets;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.server.UnicastRemoteObject;
+import javax.rmi.ssl.SslRMIClientSocketFactory;
+import javax.rmi.ssl.SslRMIServerSocketFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,17 @@ public class CWE_319_UseSSLSocketFactories extends HttpServlet {
             response.getWriter().print("exported");
         } catch (Exception e) {
             response.getWriter().print("export attempted");
+        }
+
+        try {
+            TestImpl obj = new TestImpl();
+            SslRMIClientSocketFactory csf = new SslRMIClientSocketFactory();
+            SslRMIServerSocketFactory ssf = new SslRMIServerSocketFactory();
+            // GOOD: SSL factories are used
+            Test stub = (Test) UnicastRemoteObject.exportObject(obj, 0, csf, ssf);
+            UnicastRemoteObject.unexportObject(obj, true);
+        } catch (Exception e) {
+            // fail
         }
     }
 }

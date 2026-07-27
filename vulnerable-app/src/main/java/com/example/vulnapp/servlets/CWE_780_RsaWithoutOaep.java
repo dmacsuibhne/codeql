@@ -12,6 +12,10 @@ public class CWE_780_RsaWithoutOaep extends HttpServlet {
         try {
             // BAD: No padding scheme is used
             Cipher rsa = Cipher.getInstance("RSA/ECB/NoPadding");
+
+            // GOOD: OAEP padding is used
+            Cipher rsa2 = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
+
             response.getWriter().print("cipher=" + rsa.getAlgorithm());
         } catch (Exception e) {
             throw new ServletException(e);
