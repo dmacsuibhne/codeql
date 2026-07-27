@@ -1,21 +1,20 @@
+package com.example.vulnapp.servlets;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
-
-public class NettyResponseSplitting {
-    private HttpVersion version;
-    private HttpResponseStatus httpResponseStatus;
-
-    // BAD: Disables the internal response splitting verification
-    private final DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(false);
-
-    // GOOD: Verifies headers passed don't contain CRLF characters
-    private final DefaultHttpHeaders goodHeaders = new DefaultHttpHeaders();
-
-    // BAD: Disables the internal response splitting verification
-    private final DefaultHttpResponse badResponse = new DefaultHttpResponse(version, httpResponseStatus, false);
-
-    // GOOD: Verifies headers passed don't contain CRLF characters
-    private final DefaultHttpResponse goodResponse = new DefaultHttpResponse(version, httpResponseStatus);
+/** CWE-113 Netty response splitting. Sink: new DefaultHttpResponse(..., false) disables CRLF validation. */
+public class CWE_113_NettyResponseSplitting extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // BAD: Disables the internal response splitting verification
+        DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(false);
+        DefaultHttpResponse badResponse = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, false);
+        response.getWriter().print("built status=" + badResponse.status().code() + " headers=" + badHeaders.size());
+    }
 }

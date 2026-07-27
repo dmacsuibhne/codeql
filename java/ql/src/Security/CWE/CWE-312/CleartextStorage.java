@@ -1,41 +1,21 @@
+package com.example.vulnapp.servlets;
+import java.io.IOException;
 import java.net.PasswordAuthentication;
-import java.security.MessageDigest;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class CleartextStorage {
-    static HttpServletResponse response;
-
-    private static String bytesToString(byte[] bytes) {
-        return new String(bytes);
-    }
-
-    public static void main(String[] args) throws Exception {
-        {
-            String data;
-            PasswordAuthentication credentials =
-                    new PasswordAuthentication("user", "BP@ssw0rd".toCharArray());
-            data = credentials.getUserName() + ":" + new String(credentials.getPassword());
-
-            // BAD: store data in a cookie in cleartext form
-            response.addCookie(new Cookie("auth", data));
-        }
-
-        {
-            String data;
-            PasswordAuthentication credentials =
-                    new PasswordAuthentication("user", "GP@ssw0rd".toCharArray());
-            String salt = "ThisIsMySalt";
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-            messageDigest.reset();
-            String credentialsToHash =
-                    credentials.getUserName() + ":" + credentials.getPassword();
-            byte[] hashedCredsAsBytes =
-                    messageDigest.digest((salt + credentialsToHash).getBytes("UTF-8"));
-            data = bytesToString(hashedCredsAsBytes);
-
-            // GOOD: store data in a cookie in encrypted form
-            response.addCookie(new Cookie("auth", data));
-        }
+/** CWE-312: cleartext storage of credentials in a cookie. Sink: response.addCookie(new Cookie("auth", data)). */
+public class CWE_312_CleartextStorage extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String user = request.getParameter("user");
+        PasswordAuthentication credentials =
+                new PasswordAuthentication(user, "BP@ssw0rd".toCharArray());
+        String data = credentials.getUserName() + ":" + new String(credentials.getPassword());
+        // BAD: store data in a cookie in cleartext form
+        response.addCookie(new Cookie("auth", data));
+        response.getWriter().print("stored");
     }
 }

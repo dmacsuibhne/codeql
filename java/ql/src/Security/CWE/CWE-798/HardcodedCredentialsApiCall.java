@@ -1,18 +1,22 @@
+package com.example.vulnapp.servlets;
+import java.io.IOException;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class HardcodedCredentialsApiCall {
-
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/** CWE-798 hardcoded credentials in an API call. Sink: DriverManager.getConnection(url, u, p). */
+public class CWE_798_HardcodedCredentialsApiCall extends HttpServlet {
     private static final String p = "123456"; // BAD: hard-coded credential
-
-    public static void main(String[] args) throws SQLException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String url = "jdbc:mysql://localhost/test";
         String u = "admin"; // BAD: hard-coded credential
-
-        getConn(url, u, p);
-    }
-
-    public static void getConn(String url, String v, String q) throws SQLException {
-        DriverManager.getConnection(url, v, q); // sensitive call
+        try {
+            DriverManager.getConnection(url, u, p); // sensitive call
+            response.getWriter().print("connected");
+        } catch (Exception e) {
+            response.getWriter().print("connection attempted");
+        }
     }
 }

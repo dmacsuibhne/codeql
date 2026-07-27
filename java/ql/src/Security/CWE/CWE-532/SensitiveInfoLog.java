@@ -1,22 +1,19 @@
+package com.example.vulnapp.servlets;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-public class SensitiveInfoLog {
-    private static final Logger logger = LogManager.getLogger(SensitiveInfoLog.class);
-
-    public static void main(String[] args) {
-        {
-            String password = "Pass@0rd";
-
-            // BAD: user password is written to debug log
-            logger.debug("User password is " + password);
-        }
-
-        {
-            String password = "Pass@0rd";
-
-            // GOOD: user password is never written to debug log
-            logger.debug("User password changed");
-        }
+/** CWE-532 sensitive info in logs. Source: "password". Sink: logger.debug("User password is " + password). */
+public class CWE_532_SensitiveInfoLog extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(CWE_532_SensitiveInfoLog.class);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String password = request.getParameter("password");
+        // BAD: user password is written to debug log
+        logger.debug("User password is " + password);
+        response.getWriter().print("logged");
     }
 }

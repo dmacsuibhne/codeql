@@ -1,33 +1,29 @@
+package com.example.vulnapp.servlets;
+import com.example.vulnapp.Backends;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-
-public class SqlConcatenated {
-    private Connection connection;
-
-    private String getCategory() {
-        return "";
-    }
-
-    void run() throws SQLException {
-        {
-            // BAD: the category might have SQL special characters in it
-            String category = getCategory();
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/** CWE-089: concatenated SQL. Source: "category". Sink: statement.executeQuery(query1). */
+public class CWE_089_SqlConcatenated extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String category = request.getParameter("category");
+        try (Connection connection = Backends.getConnection()) {
             Statement statement = connection.createStatement();
+            // BAD: the category might have SQL special characters in it
             String query1 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='"
                     + category + "' ORDER BY PRICE";
             ResultSet results = statement.executeQuery(query1);
-        }
-
-        {
-            // GOOD: use a prepared query
-            String category = getCategory();
-            String query2 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY=? ORDER BY PRICE";
-            PreparedStatement statement = connection.prepareStatement(query2);
-            statement.setString(1, category);
-            ResultSet results = statement.executeQuery();
+            int n = 0;
+            while (results.next()) { n++; }
+            response.getWriter().print("rows=" + n);
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
     }
 }

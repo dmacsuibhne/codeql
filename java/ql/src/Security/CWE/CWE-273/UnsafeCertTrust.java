@@ -1,43 +1,20 @@
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-
-public class UnsafeCertTrust {
-    public static void main(String[] args) throws Exception {
-
-        {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            SSLEngine sslEngine = sslContext.createSSLEngine();
-            SSLParameters sslParameters = sslEngine.getSSLParameters();
-            sslParameters.setEndpointIdentificationAlgorithm("HTTPS"); //GOOD: Set a valid endpointIdentificationAlgorithm for SSL engine to trigger hostname verification
-            sslEngine.setSSLParameters(sslParameters);
-        }
-
-        {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            SSLEngine sslEngine = sslContext.createSSLEngine();  //BAD: No endpointIdentificationAlgorithm set
-        }
-
-        {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            final SSLSocketFactory socketFactory = sslContext.getSocketFactory();
-            SSLSocket socket = (SSLSocket) socketFactory.createSocket("www.example.com", 443);
-            SSLParameters sslParameters = socket.getSSLParameters();
-            sslParameters.setEndpointIdentificationAlgorithm("HTTPS"); //GOOD: Set a valid endpointIdentificationAlgorithm for SSL socket to trigger hostname verification
-            socket.setSSLParameters(sslParameters);
-        }
-
-        {
+package com.example.vulnapp.servlets;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/** CWE-273 RabbitMQ SSL without hostname verification. Sink: connectionFactory.useSslProtocol() (no enableHostnameVerification). */
+public class CWE_273_UnsafeCertTrust extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
             com.rabbitmq.client.ConnectionFactory connectionFactory = new com.rabbitmq.client.ConnectionFactory();
+            // BAD: Hostname verification for rabbitmq ConnectionFactory is not enabled
             connectionFactory.useSslProtocol();
-            connectionFactory.enableHostnameVerification();  //GOOD: Enable hostname verification for rabbitmq ConnectionFactory
-        }
-
-        {
-            com.rabbitmq.client.ConnectionFactory connectionFactory = new com.rabbitmq.client.ConnectionFactory();
-            connectionFactory.useSslProtocol(); //BAD: Hostname verification for rabbitmq ConnectionFactory is not enabled
+            response.getWriter().print("ssl configured");
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
     }
 }

@@ -1,22 +1,17 @@
+package com.example.vulnapp.servlets;
+import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class InsecureCookie {
-    public static void test(HttpServletRequest request, HttpServletResponse response) {
-        {
-            Cookie cookie = new Cookie("secret", "fakesecret");
-
-            // BAD: 'secure' flag not set
-            response.addCookie(cookie);
-        }
-
-        {
-            Cookie cookie = new Cookie("secret", "fakesecret");
-
-            // GOOD: set 'secure' flag
-            cookie.setSecure(true);
-            response.addCookie(cookie);
-        }
+/** CWE-614: cookie without the Secure flag. Sink: response.addCookie(cookie) with no setSecure(true). */
+public class CWE_614_InsecureCookie extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Cookie cookie = new Cookie("secret", "fakesecret");
+        // BAD: 'secure' flag not set
+        response.addCookie(cookie);
+        response.getWriter().print("cookie set");
     }
 }

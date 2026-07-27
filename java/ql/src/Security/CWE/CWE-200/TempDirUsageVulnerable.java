@@ -1,25 +1,16 @@
+package com.example.vulnapp.servlets;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
-public class TempDirUsageVulnerable {
-    void exampleVulnerable() throws IOException {
-        File temp1 = File.createTempFile("random", ".txt"); // BAD: File has permissions `-rw-r--r--`
-
-        File temp2 = File.createTempFile("random", "file", null); // BAD: File has permissions `-rw-r--r--`
-
-        File systemTempDir = new File(System.getProperty("java.io.tmpdir"));
-        File temp3 = File.createTempFile("random", "file", systemTempDir); // BAD: File has permissions `-rw-r--r--`
-
-        File tempDir = com.google.common.io.Files.createTempDir(); // BAD: CVE-2020-8908: Directory has permissions `drwxr-xr-x`
-
-        new File(System.getProperty("java.io.tmpdir"), "/child").mkdir(); // BAD: Directory has permissions `-rw-r--r--`
-
-        File tempDirChildFile = new File(System.getProperty("java.io.tmpdir"), "/child-create-file.txt");
-        Files.createFile(tempDirChildFile.toPath()); // BAD: File has permissions `-rw-r--r--`
-
-        File tempDirChildDir = new File(System.getProperty("java.io.tmpdir"), "/child-dir");
-        tempDirChildDir.mkdir(); // BAD: Directory has permissions `drwxr-xr-x`
-        Files.createDirectory(tempDirChildDir.toPath()); // BAD: Directory has permissions `drwxr-xr-x`
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/** CWE-200 local information disclosure via world-readable temp files. Sink: File.createTempFile / Files.createTempDir. */
+public class CWE_200_TempDirUsageVulnerable extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        File temp1 = File.createTempFile("random", ".txt"); // BAD: permissions -rw-r--r--
+        File tempDir = com.google.common.io.Files.createTempDir(); // BAD: CVE-2020-8908
+        response.getWriter().print("created " + temp1.getName() + " and " + tempDir.getName());
     }
 }
