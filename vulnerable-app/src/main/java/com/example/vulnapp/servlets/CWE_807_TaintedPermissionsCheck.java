@@ -12,16 +12,23 @@ public class CWE_807_TaintedPermissionsCheck extends HttpServlet {
     static {
         SecurityUtils.setSecurityManager(new DefaultSecurityManager());
     }
+
+    private static void doIt() {
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String whatDoTheyWantToDo = request.getParameter("action");
         Subject subject = SecurityUtils.getSubject();
+
         // BAD: permissions decision made using tainted data
-        boolean permitted = subject.isPermitted("domain:sublevel:" + whatDoTheyWantToDo);
+        if (subject.isPermitted("domain:sublevel:" + whatDoTheyWantToDo))
+            doIt();
 
         // GOOD: use fixed checks
-        boolean permittedGood = subject.isPermitted("domain:sublevel:whatTheMethodDoes");
+        if (subject.isPermitted("domain:sublevel:whatTheMethodDoes"))
+            doIt();
 
-        response.getWriter().print("permitted=" + permitted);
+        response.getWriter().print("permission checks evaluated");
     }
 }
