@@ -14,10 +14,11 @@ public class CWE_113_NettyResponseSplitting extends HttpServlet {
             throws ServletException, IOException {
         // BAD: Disables the internal response splitting verification
         DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(false);
-        DefaultHttpResponse badResponse = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, false);
-
         // GOOD: Verifies headers passed don't contain CRLF characters
         DefaultHttpHeaders goodHeaders = new DefaultHttpHeaders();
+        // BAD: Disables the internal response splitting verification
+        DefaultHttpResponse badResponse = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, false);
+        // GOOD: Verifies headers passed don't contain CRLF characters
         DefaultHttpResponse goodResponse = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
 
         response.getWriter().print("built status=" + badResponse.status().code() + " headers=" + badHeaders.size());
