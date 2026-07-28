@@ -14,6 +14,7 @@ public class CWE_835_InfiniteLoopBad extends HttpServlet {
     void run() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; i < 10; j++) { // BAD: potential infinite loop: i should be j
+                // do stuff
                 if (shouldBreak()) return;
             }
         }
