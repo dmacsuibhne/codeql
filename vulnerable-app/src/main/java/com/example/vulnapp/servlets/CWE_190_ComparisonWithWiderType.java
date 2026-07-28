@@ -35,5 +35,9 @@ public class CWE_190_ComparisonWithWiderType extends HttpServlet {
         try { t.join(300); } catch (InterruptedException e) { }
         response.getWriter().print("loop entered=" + t.isAlive());
     }
-    private static int getFromInput(char[] buf, long pos) { return 1; }
+    private static int getFromInput(char[] buf, long pos) {
+        // write to buf
+        // ...
+        return 1;
+    }
 }

@@ -28,7 +28,7 @@ public class CWE_297_JavaMail extends HttpServlet {
         if (null != authenticator) {
             properties.put("mail.smtp.auth", "true");
         }
-        // BAD: no mail.smtp.ssl.checkserveridentity set
+        // BAD: Don't have server certificate check
         final Session session = Session.getInstance(properties, authenticator);
 
         // GOOD: Have server certificate check
