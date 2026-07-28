@@ -51,6 +51,7 @@ compatible (Spring Boot 2.7 still targets `javax.*`, matching the snippets).
 | Apache Shiro | 807 permissions | Apache-2.0 |
 | Hibernate Validator + Glassfish EL | 094 bean validation | Apache-2.0 / EPL-2.0 |
 | Hibernate ORM (JPA) | 089 JPQL | LGPL-2.1 |
+| dom4j + jaxen | 643 XPath (dom4j sinks) | BSD-3-Clause |
 | JavaMail (com.sun.mail) | 297 | CDDL-1.1 / GPL-2.0+CE |
 | Apache Commons Email | 297 | Apache-2.0 |
 | Apache Commons Lang3 | 338 | Apache-2.0 |
