@@ -13,6 +13,15 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--
+          JVM options applied ONLY to the forked test JVM (where the embedded app runs),
+          not to Maven itself or to compilation. Override on the command line with:
+              mvn test -Dapp.jvm.args="-Dfoo=bar -javaagent:/path/to/agent.jar"
+          or via the APP_JVM_OPTS environment variable (see the 'app-jvm-opts' profile):
+              APP_JVM_OPTS="-Dfoo=bar" mvn test
+          Empty by default so a normal build is unaffected.
+        -->
+        <app.jvm.args></app.jvm.args>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -207,6 +216,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
+                <configuration>
+                    <!--
+                      Fork a dedicated JVM for the tests so that ${app.jvm.args} applies only to the
+                      running app/test JVM and never to the Maven process or the compiler.
+                    -->
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <argLine>${app.jvm.args}</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -242,4 +260,23 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <!--
+          Activated automatically when the APP_JVM_OPTS environment variable is set. It feeds that
+          value into the forked test JVM's argLine, so:
+              APP_JVM_OPTS="-Dmy.flag=true -javaagent:/path/agent.jar" mvn test
+          applies those options only while the app is running under test, not to Maven or javac.
+        -->
+        <profile>
+            <id>app-jvm-opts</id>
+            <activation>
+                <property>
+                    <name>env.APP_JVM_OPTS</name>
+                </property>
+            </activation>
+            <properties>
+                <app.jvm.args>${env.APP_JVM_OPTS}</app.jvm.args>
+            </properties>
+        </profile>
+    </profiles>
 </project>
